@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive, Alex Vonderluft</title>
+
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta name="theme-color" content="#e7dfea" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <style>
+    :root {
+      --bg: #e9e1ec;
+      --text: #111111;
+      --muted: rgba(17, 17, 17, 0.52);
+      --card: rgba(255, 255, 255, 0.62);
+      --line: rgba(17, 17, 17, 0.08);
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 24px 22px 22px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 600;
+    }
+
+    .text {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 26ch;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.985);
+    }
+
+    .btn-primary {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.68);
+      color: #111111;
+      border: 1px solid var(--line);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 16px;
+      text-decoration: none;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(17, 17, 17, 0.42);
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 38px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="eyebrow">Archive</div>
+      <h1>Restricted</h1>
+
+      <p class="text">
+        Some things stay a little further in.
+      </p>
+
+      <div class="actions">
+        <!-- 主入口按钮 -->
+        <a class="btn btn-primary"
+           href="http://alexvonderluft.de"
+           target="_blank"
+           rel="noopener noreferrer">
+          Continue
+        </a>
+
+        <!-- 返回 -->
+        <a class="btn btn-secondary" href="links.html">
+          Back
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 自动跳转（延迟 1.8 秒） -->
+  <script>
+    setTimeout(function () {
+      window.location.href = "http://alexvonderluft.de";
+    }, 1800);
+  </script>
+</body>
+</html>
