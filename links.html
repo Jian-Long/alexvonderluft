@@ -1,137 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alex Vonderluft</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta name="theme-color" content="#e7dfea" />
+  <style>
+    :root {
+      --bg: #e9e1ec;
+      --text: #111111;
+      --muted: rgba(17, 17, 17, 0.46);
+      --line: rgba(17, 17, 17, 0.08);
+      --card: rgba(255, 255, 255, 0.58);
+      --card-2: rgba(255, 255, 255, 0.72);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --radius: 26px;
+    }
 
-<style>
-body{
-  margin:0;
-  font-family: Inter, Helvetica, Arial, sans-serif;
-  background: #ece6f2;
-  color:#111;
-  display:flex;
-  justify-content:center;
-  padding:24px;
-}
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.wrap{
-  width:100%;
-  max-width:420px;
-}
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
 
-/* HEADER */
+    body {
+      min-height: 100svh;
+      padding: 28px 16px 36px;
+    }
 
-.header{
-  text-align:center;
-  margin-bottom:24px;
-}
+    .wrap {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+    }
 
-.name{
-  font-size:28px;
-  letter-spacing:-0.04em;
-  font-weight:600;
-}
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
 
-.sub{
-  margin-top:6px;
-  font-size:13px;
-  color:rgba(0,0,0,0.6);
-}
+    .name {
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
 
-/* LINKS */
+    .sub {
+      margin-top: 8px;
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-.card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px;
-  border-radius:20px;
-  background:white;
-  margin-bottom:12px;
-  text-decoration:none;
-  color:inherit;
-  transition:0.2s;
-}
+    .list {
+      display: grid;
+      gap: 12px;
+    }
 
-.card:active{
-  transform:scale(0.97);
-}
+    .card {
+      display: grid;
+      grid-template-columns: 1fr 54px;
+      align-items: center;
+      gap: 14px;
+      min-height: 92px;
+      padding: 14px 14px 14px 18px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.42);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
 
-.title{
-  font-size:16px;
-  font-weight:600;
-}
+    .card:hover {
+      transform: translateY(-1px);
+      background: var(--card-2);
+    }
 
-.desc{
-  font-size:12px;
-  color:rgba(0,0,0,0.6);
-  margin-top:4px;
-}
+    .card:active {
+      transform: scale(0.985);
+    }
 
-.arrow{
-  font-size:18px;
-}
+    .meta {
+      min-width: 0;
+    }
 
-/* BACK */
+    .title {
+      font-size: 24px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+      margin: 0;
+    }
 
-.back{
-  margin-top:14px;
-  font-size:11px;
-  text-align:center;
-  display:block;
-  text-decoration:none;
-  color:rgba(0,0,0,0.5);
-  letter-spacing:0.15em;
-}
-</style>
+    .desc {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+      background: rgba(255,255,255,0.7);
+      justify-self: end;
+      flex-shrink: 0;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(17, 17, 17, 0.42);
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-top: 40px;
+      }
+
+      .wrap {
+        max-width: 460px;
+      }
+
+      .name {
+        font-size: 22px;
+      }
+
+      .card {
+        min-height: 96px;
+        padding-left: 20px;
+      }
+
+      .title {
+        font-size: 26px;
+      }
+
+      .thumb {
+        width: 58px;
+        height: 58px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="wrap">
+    <header class="header">
+      <h1 class="name">Alex Vonderluft</h1>
+      <div class="sub">Access</div>
+    </header>
 
-<div class="wrap">
+    <section class="list">
+      <a class="card" href="https://instagram.com/alexvonderluft" target="_blank" rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Public</div>
+          <div class="desc">open presence</div>
+        </div>
+        <div class="thumb">
+          <img src="ig.jpg" alt="Public" />
+        </div>
+      </a>
 
-  <div class="header">
-    <div class="name">Alex Vonderluft</div>
-    <div class="sub">a little closer</div>
-  </div>
+      <a class="card" href="https://snapchat.com/add/alexinfur" target="_blank" rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Current</div>
+          <div class="desc">in the moment</div>
+        </div>
+        <div class="thumb">
+          <img src="snap.jpg" alt="Current" />
+        </div>
+      </a>
 
-  <a class="card" href="https://instagram.com/alexvonderluft">
-    <div>
-      <div class="title">Instagram</div>
-      <div class="desc">public side</div>
-    </div>
-    <div class="arrow">↗</div>
-  </a>
+      <a class="card" href="https://t.me/+VtJzLyitRzY2ZGEy" target="_blank" rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Circle</div>
+          <div class="desc">closer access</div>
+        </div>
+        <div class="thumb">
+          <img src="tg.jpg" alt="Circle" />
+        </div>
+      </a>
 
-  <a class="card" href="https://snapchat.com/add/alexinfur">
-    <div>
-      <div class="title">Snapchat</div>
-      <div class="desc">right now</div>
-    </div>
-    <div class="arrow">↗</div>
-  </a>
+      <a class="card" href="http://alexvonderluft.de/" target="_blank" rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Archive</div>
+          <div class="desc">restricted</div>
+        </div>
+        <div class="thumb">
+          <img src="of.jpg" alt="Archive" />
+        </div>
+      </a>
+    </section>
 
-  <a class="card" href="https://t.me/+VtJzLyitRzY2ZGEy">
-    <div>
-      <div class="title">Telegram</div>
-      <div class="desc">closer than anywhere else</div>
-    </div>
-    <div class="arrow">↗</div>
-  </a>
-
-  <a class="card" href="https://onlyfans.com/alexvonderluft">
-    <div>
-      <div class="title">exclusive</div>
-      <div class="desc">private side</div>
-    </div>
-    <div class="arrow">↗</div>
-  </a>
-
-  <a href="index.html" class="back">back</a>
-
-</div>
-
+    <a class="back" href="index.html">Back</a>
+  </main>
 </body>
 </html>
