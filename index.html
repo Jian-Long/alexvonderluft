@@ -1,12 +1,195 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alex Vonderluft</title>
+  <meta name="description" content="Alex Vonderluft" />
+  <style>
+    :root {
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --line: rgba(255, 255, 255, 0.22);
+      --glass: rgba(255, 255, 255, 0.12);
+      --glass-strong: rgba(255, 255, 255, 0.18);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+      background: #d9dce2;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.54) 0%, rgba(0,0,0,0.18) 32%, rgba(0,0,0,0.04) 58%, rgba(0,0,0,0.08) 100%),
+        url("hero.jpg") center center / cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.25), transparent 30%),
+        linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 18%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 460px;
+      padding: 18px 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.14), rgba(255,255,255,0.10));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .label {
+      margin: 0 0 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 11vw, 72px);
+      line-height: 0.92;
+      font-weight: 650;
+      letter-spacing: -0.06em;
+      text-wrap: balance;
+    }
+
+    h1 span {
+      display: block;
+      font-weight: 330;
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 24ch;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+    }
+
+    .btn:active {
+      transform: scale(0.985);
+    }
+
+    .btn-primary {
+      color: #111;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    .btn-primary:hover {
+      background: #ffffff;
+    }
+
+    .btn-secondary {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.66);
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        align-items: center;
+        justify-content: flex-end;
+        padding: 40px;
+      }
+
+      .card {
+        max-width: 480px;
+        padding: 22px 22px 24px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .btn-primary {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
 </head>
-<body style="background:black;color:white;text-align:center;margin-top:100px;">
-  <h1>Alex Vonderluft</h1>
-  <p>Not everything belongs here.</p>
-  <a href="enter.html" style="color:white;">enter</a>
+<body>
+  <main class="hero">
+    <section class="card">
+      <p class="label">Alex Vonderluft</p>
+      <h1>Alex <span>Vonderluft</span></h1>
+      <p class="sub">Outfit, mood, and a world of my own.</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="links.html">Enter</a>
+        <a class="btn btn-secondary" href="https://instagram.com/alexvonderluft" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+
+      <div class="footer-note">Fashion identity</div>
+    </section>
+  </main>
 </body>
 </html>

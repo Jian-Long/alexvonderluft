@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Vonderluft, Links</title>
+  <meta name="description" content="Alex Vonderluft links" />
+  <style>
+    :root {
+      --bg: #d8cee0;
+      --bg2: #cdbfd7;
+      --text: #141414;
+      --muted: rgba(20, 20, 20, 0.66);
+      --line: rgba(20, 20, 20, 0.12);
+      --card: rgba(255,255,255,0.28);
+      --shadow: 0 20px 50px rgba(0,0,0,0.10);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100svh;
+      padding: 18px 16px 28px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .top {
+      text-align: center;
+      padding: 18px 8px 18px;
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.42);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      font-weight: 650;
+    }
+
+    .mini {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .link-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 78px;
+      padding: 16px 16px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .link-card:active {
+      transform: scale(0.988);
+    }
+
+    .left {
+      min-width: 0;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.15;
+      font-weight: 620;
+      letter-spacing: -0.03em;
+    }
+
+    .desc {
+      margin: 5px 0 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,20,20,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.42);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 18px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-top: 34px;
+        padding-bottom: 40px;
+      }
+
+      .avatar {
+        width: 96px;
+        height: 96px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .link-card {
+        min-height: 84px;
+        padding: 18px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="top">
+      <div class="avatar">
+        <img src="hero.jpg" alt="Alex Vonderluft" />
+      </div>
+      <h1>Alex Vonderluft</h1>
+      <div class="mini">Choose your entrance</div>
+    </section>
+
+    <section class="grid">
+      <a class="link-card" href="https://instagram.com/alexvonderluft" target="_blank" rel="noopener noreferrer">
+        <div class="left">
+          <p class="title">Instagram</p>
+          <p class="desc">Public side</p>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="link-card" href="https://snapchat.com/add/你的snap用户名" target="_blank" rel="noopener noreferrer">
+        <div class="left">
+          <p class="title">Snapchat</p>
+          <p class="desc">Right now</p>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="link-card" href="https://t.me/你的telegram用户名" target="_blank" rel="noopener noreferrer">
+        <div class="left">
+          <p class="title">Telegram</p>
+          <p class="desc">Closer than anywhere else</p>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="link-card" href="https://onlyfans.com/你的用户名" target="_blank" rel="noopener noreferrer">
+        <div class="left">
+          <p class="title">Exclusive page</p>
+          <p class="desc">Private side</p>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+    </section>
+
+    <a class="back" href="index.html">Back</a>
+  </main>
+</body>
+</html>
