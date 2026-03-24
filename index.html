@@ -1,167 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alex Vonderluft</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<meta name="theme-color" content="#e9e0ef">
-<style>
-:root{
-  --white: #ffffff;
-  --soft: rgba(255,255,255,0.75);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta name="theme-color" content="#e9e0ef" />
+  <style>
+    :root{
+      --white: #ffffff;
+      --soft: rgba(255,255,255,0.75);
+    }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-body{
-  font-family: Inter, Helvetica, Arial, sans-serif;
-  color: var(--white);
-  height:100vh;
-  overflow:hidden;
-}
+    body{
+      font-family: Inter, Helvetica, Arial, sans-serif;
+      color: var(--white);
+      height:100vh;
+      overflow:hidden;
+    }
 
-/* ===== HERO ===== */
+    .hero{
+      position:relative;
+      height:100vh;
+      width:100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.05) 100%),
+        url("hero.jpg") center / cover no-repeat;
+    }
 
-.hero{
-  position:relative;
-  height:100vh;
-  width:100%;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  background:
-    linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.05) 100%),
-    url("hero.jpg") center / cover no-repeat;
-}
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.08);
+      pointer-events:none;
+    }
 
-/* subtle film grain feel */
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,0.08);
-  pointer-events:none;
-}
+    .content{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:420px;
+      padding:24px;
+      margin-bottom:22px;
+    }
 
-/* ===== CONTENT ===== */
+    .name{
+      font-size: clamp(48px, 13vw, 82px);
+      line-height:0.9;
+      letter-spacing:-0.06em;
+      font-weight:600;
+    }
 
-.content{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-width:420px;
-  padding:24px;
-  margin-bottom:22px;
-}
+    .name span{
+      display:block;
+      font-weight:300;
+    }
 
-/* NAME */
+    .text{
+      margin-top:14px;
+      font-size:14px;
+      color:var(--soft);
+      letter-spacing:0.02em;
+    }
 
-.name{
-  font-size: clamp(48px, 13vw, 82px);
-  line-height:0.9;
-  letter-spacing:-0.06em;
-  font-weight:600;
-}
+    .btn{
+      margin-top:24px;
+      width:100%;
+      height:56px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.95);
+      color:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-size:14px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      font-weight:600;
+      transition: all 0.2s ease;
+    }
 
-.name span{
-  display:block;
-  font-weight:300;
-}
+    .btn:active{
+      transform:scale(0.96);
+    }
 
-/* TEXT */
+    .btn:hover{
+      background:#fff;
+    }
 
-.text{
-  margin-top:14px;
-  font-size:14px;
-  color:var(--soft);
-  letter-spacing:0.02em;
-}
+    .note{
+      margin-top:10px;
+      font-size:11px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.6);
+    }
 
-/* BUTTON */
+    @media (min-width:768px){
+      .hero{
+        align-items:center;
+        justify-content:flex-end;
+        padding-right:60px;
+      }
 
-.btn{
-  margin-top:24px;
-  width:100%;
-  height:56px;
-  border-radius:999px;
-  background: rgba(255,255,255,0.95);
-  color:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  font-size:14px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  font-weight:600;
-  transition: all 0.2s ease;
-}
-
-.btn:active{
-  transform:scale(0.96);
-}
-
-.btn:hover{
-  background:#fff;
-}
-
-/* SMALL DETAIL */
-
-.note{
-  margin-top:10px;
-  font-size:11px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.6);
-}
-
-/* DESKTOP */
-
-@media (min-width:768px){
-  .hero{
-    align-items:center;
-    justify-content:flex-end;
-    padding-right:60px;
-  }
-
-  .content{
-    margin-bottom:0;
-  }
-}
-</style>
+      .content{
+        margin-bottom:0;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="hero">
+    <div class="content">
+      <div class="name">
+        Alex
+        <span>Vonderluft</span>
+      </div>
 
-<div class="hero">
-  <div class="content">
+      <div class="text">
+        Not everything is meant to be seen.
+      </div>
 
-    <div class="name">
-      Alex
-      <span>Vonderluft</span>
+      <a href="links.html" class="btn" id="enterBtn">
+        come closer
+      </a>
+
+      <div class="note">
+        by selection
+      </div>
     </div>
-
-    <div class="text">
-      Not everything is meant to be seen.
-    </div>
-
-    <a href="links.html" class="btn">
-      come closer
-    </a>
-
-    <div class="note">
-      by selection
-    </div>
-
   </div>
-</div>
 
+  <script>
+    const NS = "alexvonderluft_site";
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get("src") || "direct";
+
+    function hit(key) {
+      const url = "https://api.countapi.xyz/hit/" + NS + "/" + encodeURIComponent(key);
+      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
+    }
+
+    hit("page-index");
+    hit("source-" + src);
+    hit("source-" + src + "__page-index");
+
+    const enterBtn = document.getElementById("enterBtn");
+    enterBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      hit("click-enter");
+      hit("source-" + src + "__click-enter");
+
+      const next = new URL("links.html", window.location.href);
+      next.searchParams.set("src", src);
+
+      setTimeout(function () {
+        window.location.href = next.toString();
+      }, 120);
+    });
+  </script>
 </body>
 </html>

@@ -116,16 +116,6 @@
       border: 1px solid var(--line);
     }
 
-    .back {
-      display: inline-block;
-      margin-top: 16px;
-      text-decoration: none;
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(17, 17, 17, 0.42);
-    }
-
     @media (min-width: 768px) {
       h1 {
         font-size: 38px;
@@ -133,7 +123,6 @@
     }
   </style>
 </head>
-
 <body>
   <main class="wrap">
     <section class="card">
@@ -145,26 +134,62 @@
       </p>
 
       <div class="actions">
-        <!-- 主入口按钮 -->
         <a class="btn btn-primary"
+           id="continueBtn"
            href="http://alexvonderluft.de"
            target="_blank"
            rel="noopener noreferrer">
           Continue
         </a>
 
-        <!-- 返回 -->
-        <a class="btn btn-secondary" href="links.html">
+        <a class="btn btn-secondary" id="backBtn" href="links.html">
           Back
         </a>
       </div>
     </section>
   </main>
 
-  <!-- 自动跳转（延迟 1.8 秒） -->
   <script>
+    const NS = "alexvonderluft_site";
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get("src") || "direct";
+    const destination = "http://alexvonderluft.de";
+
+    function hit(key) {
+      const url = "https://api.countapi.xyz/hit/" + NS + "/" + encodeURIComponent(key);
+      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
+    }
+
+    hit("page-archive");
+    hit("source-" + src + "__page-archive");
+
+    const continueBtn = document.getElementById("continueBtn");
+    continueBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      hit("click-continue");
+      hit("source-" + src + "__click-continue");
+
+      setTimeout(function () {
+        window.open(destination, "_blank", "noopener");
+      }, 120);
+    });
+
+    const backBtn = document.getElementById("backBtn");
+    backBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      const prev = new URL("links.html", window.location.href);
+      prev.searchParams.set("src", src);
+
+      setTimeout(function () {
+        window.location.href = prev.toString();
+      }, 120);
+    });
+
     setTimeout(function () {
-      window.location.href = "http://alexvonderluft.de";
+      hit("auto-redirect");
+      hit("source-" + src + "__auto-redirect");
+      window.location.href = destination;
     }, 1800);
   </script>
 </body>

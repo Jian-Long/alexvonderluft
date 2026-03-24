@@ -185,7 +185,11 @@
     </header>
 
     <section class="list">
-      <a class="card" href="https://instagram.com/alexvonderluft" target="_blank" rel="noopener noreferrer">
+      <a class="card track-link"
+         href="https://instagram.com/alexvonderluft"
+         data-target="public"
+         target="_blank"
+         rel="noopener noreferrer">
         <div class="meta">
           <div class="title">Public</div>
           <div class="desc">open presence</div>
@@ -195,7 +199,11 @@
         </div>
       </a>
 
-      <a class="card" href="https://snapchat.com/add/alexinfur" target="_blank" rel="noopener noreferrer">
+      <a class="card track-link"
+         href="https://snapchat.com/add/alexinfur"
+         data-target="current"
+         target="_blank"
+         rel="noopener noreferrer">
         <div class="meta">
           <div class="title">Current</div>
           <div class="desc">in the moment</div>
@@ -205,7 +213,11 @@
         </div>
       </a>
 
-      <a class="card" href="https://t.me/+VtJzLyitRzY2ZGEy" target="_blank" rel="noopener noreferrer">
+      <a class="card track-link"
+         href="https://t.me/+VtJzLyitRzY2ZGEy"
+         data-target="circle"
+         target="_blank"
+         rel="noopener noreferrer">
         <div class="meta">
           <div class="title">Circle</div>
           <div class="desc">closer access</div>
@@ -215,18 +227,59 @@
         </div>
       </a>
 
-    <a class="card" href="archive.html">
-  <div class="meta">
-    <div class="title">Archive</div>
-    <div class="desc">restricted</div>
-  </div>
-  <div class="thumb">
-    <img src="of.jpg" alt="Archive" />
-  </div>
-</a>
+      <a class="card track-link"
+         href="archive.html"
+         data-target="archive">
+        <div class="meta">
+          <div class="title">Archive</div>
+          <div class="desc">restricted</div>
+        </div>
+        <div class="thumb">
+          <img src="of.jpg" alt="Archive" />
+        </div>
+      </a>
     </section>
 
     <a class="back" href="index.html">Back</a>
   </main>
+
+  <script>
+    const NS = "alexvonderluft_site";
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get("src") || "direct";
+
+    function hit(key) {
+      const url = "https://api.countapi.xyz/hit/" + NS + "/" + encodeURIComponent(key);
+      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
+    }
+
+    hit("page-links");
+    hit("source-" + src + "__page-links");
+
+    document.querySelectorAll(".track-link").forEach(function(link) {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        const target = link.dataset.target || "unknown";
+        hit("click-" + target);
+        hit("source-" + src + "__click-" + target);
+
+        const href = link.getAttribute("href");
+
+        if (href === "archive.html") {
+          const next = new URL("archive.html", window.location.href);
+          next.searchParams.set("src", src);
+
+          setTimeout(function () {
+            window.location.href = next.toString();
+          }, 120);
+        } else {
+          setTimeout(function () {
+            window.open(href, "_blank", "noopener");
+          }, 120);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
