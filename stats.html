@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stats, Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta name="theme-color" content="#ece4f0" />
+  <style>
+    :root {
+      --bg: #ece4f0;
+      --bg-2: #e3d8ea;
+      --card: rgba(255, 255, 255, 0.72);
+      --line: rgba(17, 17, 17, 0.08);
+      --text: #111111;
+      --muted: rgba(17, 17, 17, 0.56);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    }
+
+    body {
+      min-height: 100svh;
+      padding: 22px 14px 32px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .title {
+      font-size: clamp(26px, 6vw, 42px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 650;
+      margin: 0;
+    }
+
+    .sub {
+      margin-top: 8px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .refresh-btn {
+      border: none;
+      background: #111111;
+      color: #ffffff;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.42);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 18px 16px 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 620;
+      margin: 0;
+    }
+
+    .section-note {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      min-height: 92px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--line);
+      padding: 12px 12px 10px;
+    }
+
+    .label {
+      font-size: 11px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .value {
+      margin-top: 10px;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 650;
+    }
+
+    .small {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .table {
+      display: grid;
+      gap: 8px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      min-height: 52px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+    }
+
+    .row-name {
+      font-size: 15px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 560;
+    }
+
+    .row-value {
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-weight: 650;
+    }
+
+    .footer {
+      margin-top: 16px;
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .status {
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 28px 20px 40px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .refresh-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <div>
+        <h1 class="title">Site Stats</h1>
+        <div class="sub">Alex Vonderluft</div>
+      </div>
+      <button class="refresh-btn" id="refreshBtn">Refresh</button>
+    </div>
+
+    <div class="status" id="status">Loading data...</div>
+
+    <div class="grid">
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Overview</h2>
+          <div class="section-note">Pages</div>
+        </div>
+        <div class="cards">
+          <div class="stat">
+            <div class="label">Index</div>
+            <div class="value" id="page-index">-</div>
+            <div class="small">homepage views</div>
+          </div>
+          <div class="stat">
+            <div class="label">Links</div>
+            <div class="value" id="page-links">-</div>
+            <div class="small">directory views</div>
+          </div>
+          <div class="stat">
+            <div class="label">Archive</div>
+            <div class="value" id="page-archive">-</div>
+            <div class="small">archive page views</div>
+          </div>
+          <div class="stat">
+            <div class="label">Enter Click</div>
+            <div class="value" id="click-enter">-</div>
+            <div class="small">homepage button</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Traffic Sources</h2>
+          <div class="section-note">origin</div>
+        </div>
+        <div class="table" id="sourcesTable"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Link Clicks</h2>
+          <div class="section-note">destination</div>
+        </div>
+        <div class="cards">
+          <div class="stat">
+            <div class="label">Public</div>
+            <div class="value" id="click-public">-</div>
+            <div class="small">Instagram</div>
+          </div>
+          <div class="stat">
+            <div class="label">Current</div>
+            <div class="value" id="click-current">-</div>
+            <div class="small">Snapchat</div>
+          </div>
+          <div class="stat">
+            <div class="label">Circle</div>
+            <div class="value" id="click-circle">-</div>
+            <div class="small">Telegram</div>
+          </div>
+          <div class="stat">
+            <div class="label">Archive</div>
+            <div class="value" id="click-archive">-</div>
+            <div class="small">archive entry</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Archive Actions</h2>
+          <div class="section-note">deep layer</div>
+        </div>
+        <div class="cards">
+          <div class="stat">
+            <div class="label">Continue</div>
+            <div class="value" id="click-continue">-</div>
+            <div class="small">manual click</div>
+          </div>
+          <div class="stat">
+            <div class="label">Auto Redirect</div>
+            <div class="value" id="auto-redirect">-</div>
+            <div class="small">automatic jump</div>
+          </div>
+          <div class="stat">
+            <div class="label">IG to Circle</div>
+            <div class="value" id="source-ig__click-circle">-</div>
+            <div class="small">IG → TG</div>
+          </div>
+          <div class="stat">
+            <div class="label">IG to Archive</div>
+            <div class="value" id="source-ig__click-archive">-</div>
+            <div class="small">IG → Archive</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Source to Destination</h2>
+          <div class="section-note">funnel</div>
+        </div>
+        <div class="table" id="flowsTable"></div>
+      </section>
+    </div>
+
+    <div class="footer">
+      This page reads CountAPI live. Keep this page private.
+    </div>
+  </main>
+
+  <script>
+    const NS = "alexvonderluft_site";
+    const API = "https://api.countapi.xyz/get/" + NS + "/";
+    const statusEl = document.getElementById("status");
+
+    const sources = ["ig", "snap", "tg", "story", "dm", "direct"];
+    const pages = ["page-index", "page-links", "page-archive", "click-enter"];
+    const clicks = ["click-public", "click-current", "click-circle", "click-archive", "click-continue", "auto-redirect"];
+
+    const flows = [
+      "source-ig__click-public",
+      "source-ig__click-current",
+      "source-ig__click-circle",
+      "source-ig__click-archive",
+      "source-snap__click-public",
+      "source-snap__click-current",
+      "source-snap__click-circle",
+      "source-snap__click-archive",
+      "source-tg__click-public",
+      "source-tg__click-current",
+      "source-tg__click-circle",
+      "source-tg__click-archive"
+    ];
+
+    async function getValue(key) {
+      try {
+        const res = await fetch(API + encodeURIComponent(key));
+        if (!res.ok) return 0;
+        const data = await res.json();
+        return typeof data.value === "number" ? data.value : 0;
+      } catch {
+        return 0;
+      }
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function prettyLabel(key) {
+      const map = {
+        "source-ig__click-public": "IG → Public",
+        "source-ig__click-current": "IG → Current",
+        "source-ig__click-circle": "IG → Circle",
+        "source-ig__click-archive": "IG → Archive",
+        "source-snap__click-public": "Snap → Public",
+        "source-snap__click-current": "Snap → Current",
+        "source-snap__click-circle": "Snap → Circle",
+        "source-snap__click-archive": "Snap → Archive",
+        "source-tg__click-public": "TG → Public",
+        "source-tg__click-current": "TG → Current",
+        "source-tg__click-circle": "TG → Circle",
+        "source-tg__click-archive": "TG → Archive"
+      };
+      return map[key] || key;
+    }
+
+    function renderRows(targetId, rows) {
+      const target = document.getElementById(targetId);
+      target.innerHTML = "";
+
+      rows.forEach(row => {
+        const div = document.createElement("div");
+        div.className = "row";
+        div.innerHTML = `
+          <div class="row-name">${row.name}</div>
+          <div class="row-value">${row.value}</div>
+        `;
+        target.appendChild(div);
+      });
+    }
+
+    async function loadStats() {
+      statusEl.textContent = "Loading data...";
+
+      for (const key of pages) {
+        setText(key, await getValue(key));
+      }
+
+      for (const key of clicks) {
+        setText(key, await getValue(key));
+      }
+
+      setText("source-ig__click-circle", await getValue("source-ig__click-circle"));
+      setText("source-ig__click-archive", await getValue("source-ig__click-archive"));
+
+      const sourceRows = [];
+      for (const src of sources) {
+        const value = await getValue("source-" + src);
+        sourceRows.push({
+          name: src.toUpperCase(),
+          value
+        });
+      }
+      sourceRows.sort((a, b) => b.value - a.value);
+      renderRows("sourcesTable", sourceRows);
+
+      const flowRows = [];
+      for (const key of flows) {
+        const value = await getValue(key);
+        flowRows.push({
+          name: prettyLabel(key),
+          value
+        });
+      }
+      flowRows.sort((a, b) => b.value - a.value);
+      renderRows("flowsTable", flowRows);
+
+      const now = new Date();
+      statusEl.textContent = "Updated: " + now.toLocaleString();
+    }
+
+    document.getElementById("refreshBtn").addEventListener("click", loadStats);
+
+    loadStats();
+  </script>
+</body>
+</html>
