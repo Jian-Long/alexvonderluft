@@ -1,3 +1,4 @@
+<!-- links.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,252 +8,351 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
   <meta name="theme-color" content="#e7dfea" />
+
   <style>
     :root {
-      --bg: #e9e1ec;
-      --text: #111111;
-      --muted: rgba(17, 17, 17, 0.46);
-      --line: rgba(17, 17, 17, 0.08);
-      --card: rgba(255, 255, 255, 0.58);
-      --card-2: rgba(255, 255, 255, 0.72);
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-      --radius: 26px;
+      --bg:#e9e1ec;
+      --text:#111111;
+      --muted:rgba(17,17,17,.46);
+      --line:rgba(17,17,17,.08);
+      --card:rgba(255,255,255,.58);
+      --card-2:rgba(255,255,255,.74);
+      --exclusive:rgba(255,255,255,.90);
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --shadow-strong:0 18px 48px rgba(0,0,0,.12);
+      --radius:26px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    body {
-      min-height: 100svh;
-      padding: 28px 16px 36px;
+    body{
+      min-height:100svh;
+      padding:28px 16px 36px;
     }
 
-    .wrap {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
+    .wrap{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
+    .header{
+      text-align:center;
+      margin-bottom:24px;
     }
 
-    .name {
-      font-size: 20px;
-      line-height: 1;
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      margin: 0;
+    .name{
+      font-size:22px;
+      line-height:1;
+      font-weight:650;
+      letter-spacing:-.05em;
+      margin:0;
     }
 
-    .sub {
-      margin-top: 8px;
-      font-size: 10px;
-      line-height: 1;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .community{
+      margin-top:8px;
+      font-size:12px;
+      color:rgba(17,17,17,.52);
+      letter-spacing:.04em;
     }
 
-    .list {
-      display: grid;
-      gap: 12px;
+    .sub{
+      margin-top:8px;
+      font-size:10px;
+      line-height:1;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--muted);
     }
 
-    .card {
-      display: grid;
-      grid-template-columns: 1fr 54px;
-      align-items: center;
-      gap: 14px;
-      min-height: 92px;
-      padding: 14px 14px 14px 18px;
-      border-radius: var(--radius);
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.42);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.18s ease, background 0.18s ease;
+    .section-label{
+      margin:20px 0 9px 4px;
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(17,17,17,.38);
     }
 
-    .card:hover {
-      transform: translateY(-1px);
-      background: var(--card-2);
+    .list{
+      display:grid;
+      gap:12px;
     }
 
-    .card:active {
-      transform: scale(0.985);
+    .card{
+      display:grid;
+      grid-template-columns:1fr 54px;
+      align-items:center;
+      gap:14px;
+      min-height:92px;
+      padding:14px 14px 14px 18px;
+      border-radius:var(--radius);
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.42);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      text-decoration:none;
+      color:inherit;
+      transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
     }
 
-    .meta {
-      min-width: 0;
+    .card:hover{
+      transform:translateY(-2px);
+      background:var(--card-2);
     }
 
-    .title {
-      font-size: 24px;
-      line-height: 0.95;
-      letter-spacing: -0.05em;
-      font-weight: 600;
-      margin: 0;
+    .card:active{
+      transform:scale(.985);
     }
 
-    .desc {
-      margin-top: 8px;
-      font-size: 12px;
-      line-height: 1.2;
-      color: var(--muted);
-      letter-spacing: 0.02em;
+    .exclusive-card{
+      position:relative;
+      min-height:124px;
+      grid-template-columns:1fr 74px;
+      background:var(--exclusive);
+      box-shadow:var(--shadow-strong);
+      border:1px solid rgba(255,255,255,.72);
+      overflow:hidden;
     }
 
-    .thumb {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
-      background: rgba(255,255,255,0.7);
-      justify-self: end;
-      flex-shrink: 0;
+    .exclusive-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.9), transparent 34%),
+        linear-gradient(135deg, rgba(255,255,255,.5), transparent);
+      pointer-events:none;
     }
 
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .exclusive-card:hover{
+      transform:translateY(-5px);
+      background:#fff;
+      box-shadow:0 22px 56px rgba(0,0,0,.15);
     }
 
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 18px;
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: rgba(17, 17, 17, 0.42);
+    .meta{
+      min-width:0;
+      position:relative;
+      z-index:2;
     }
 
-    @media (min-width: 768px) {
-      body {
-        padding-top: 40px;
+    .title{
+      font-size:24px;
+      line-height:.95;
+      letter-spacing:-.055em;
+      font-weight:650;
+      margin:0;
+    }
+
+    .exclusive-card .title{
+      font-size:30px;
+    }
+
+    .desc{
+      margin-top:8px;
+      font-size:12px;
+      line-height:1.2;
+      color:var(--muted);
+      letter-spacing:.02em;
+    }
+
+    .exclusive-card .desc{
+      font-size:13px;
+      color:rgba(17,17,17,.55);
+    }
+
+    .extra{
+      margin-top:8px;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(17,17,17,.42);
+    }
+
+    .thumb{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      background:rgba(255,255,255,.7);
+      justify-self:end;
+      flex-shrink:0;
+      position:relative;
+      z-index:2;
+    }
+
+    .exclusive-card .thumb{
+      width:74px;
+      height:74px;
+      box-shadow:0 10px 28px rgba(0,0,0,.16);
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      z-index:3;
+      height:24px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#111;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:10px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .back{
+      display:block;
+      text-align:center;
+      margin-top:22px;
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      text-decoration:none;
+      color:rgba(17,17,17,.42);
+    }
+
+    @media (min-width:768px){
+      body{
+        padding-top:40px;
       }
 
-      .wrap {
-        max-width: 460px;
+      .wrap{
+        max-width:460px;
       }
 
-      .name {
-        font-size: 22px;
+      .card{
+        min-height:96px;
+        padding-left:20px;
       }
 
-      .card {
-        min-height: 96px;
-        padding-left: 20px;
+      .title{
+        font-size:26px;
       }
 
-      .title {
-        font-size: 26px;
-      }
-
-      .thumb {
-        width: 58px;
-        height: 58px;
+      .thumb{
+        width:58px;
+        height:58px;
       }
     }
   </style>
 </head>
+
 <body>
   <main class="wrap">
     <header class="header">
       <h1 class="name">Alex Vonderluft</h1>
+      <div class="community">community across platforms</div>
       <div class="sub">Access</div>
     </header>
 
+    <div class="section-label">Private</div>
+
     <section class="list">
-  <a class="card track-link"
-     href="https://instagram.com/alexvonderluft"
-     data-target="instagram"
-     target="_blank"
-     rel="noopener noreferrer">
-    <div class="meta">
-      <div class="title">Instagram</div>
-      <div class="desc">public</div>
-    </div>
-    <div class="thumb">
-      <img src="ig.jpg" alt="Instagram" />
-    </div>
-  </a>
+      <a class="card track-link"
+         href="https://t.me/+VtJzLyitRzY2ZGEy"
+         data-target="telegram"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Telegram</div>
+          <div class="desc">inner circle</div>
+        </div>
+        <div class="thumb">
+          <img src="tg.png" alt="Telegram" />
+        </div>
+      </a>
 
-  <a class="card track-link"
-     href="https://t.me/+VtJzLyitRzY2ZGEy"
-     data-target="telegram"
-     target="_blank"
-     rel="noopener noreferrer">
-    <div class="meta">
-      <div class="title">Telegram</div>
-      <div class="desc">closer</div>
-    </div>
-    <div class="thumb">
-      <img src="tg.jpg" alt="Telegram" />
-    </div>
-  </a>
+      <a class="card exclusive-card track-link"
+         href="archive.html"
+         data-target="exclusive">
+        <div class="badge">VIP</div>
+        <div class="meta">
+          <div class="title">Exclusive</div>
+          <div class="desc">private archive</div>
+          <div class="extra">members only</div>
+        </div>
+        <div class="thumb">
+          <img src="of.png" alt="Exclusive" />
+        </div>
+      </a>
+    </section>
 
-  <a class="card track-link"
-     href="archive.html"
-     data-target="exclusive">
-    <div class="meta">
-      <div class="title">Exclusive</div>
-      <div class="desc">private side</div>
-    </div>
-    <div class="thumb">
-      <img src="of.jpg" alt="Exclusive" />
-    </div>
-  </a>
+    <div class="section-label">Public</div>
 
-  <a class="card track-link"
-     href="https://snapchat.com/add/alexinfur"
-     data-target="snapchat"
-     target="_blank"
-     rel="noopener noreferrer">
-    <div class="meta">
-      <div class="title">Snapchat</div>
-      <div class="desc">right now</div>
-    </div>
-    <div class="thumb">
-      <img src="snap.jpeg" alt="Snapchat" />
-    </div>
-  </a>
+    <section class="list">
+      <a class="card track-link"
+         href="https://instagram.com/alexvonderluft"
+         data-target="instagram"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Instagram</div>
+          <div class="desc">public</div>
+        </div>
+        <div class="thumb">
+          <img src="ig.jpg" alt="Instagram" />
+        </div>
+      </a>
 
-  <a class="card track-link"
-     href="https://wishlist.de/w/alexvonderluft"
-     data-target="wishlist"
-     target="_blank"
-     rel="noopener noreferrer">
-    <div class="meta">
-      <div class="title">Wishlist</div>
-      <div class="desc">support my adventures</div>
-    </div>
-    <div class="thumb">
-      <img src="wishlist.png" alt="Wishlist" />
-    </div>
-  </a>
-</section>
+      <a class="card track-link"
+         href="https://snapchat.com/add/alexinfur"
+         data-target="snapchat"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Snapchat</div>
+          <div class="desc">right now</div>
+        </div>
+        <div class="thumb">
+          <img src="snap.png" alt="Snapchat" />
+        </div>
+      </a>
+    </section>
+
+    <div class="section-label">Support</div>
+
+    <section class="list">
+      <a class="card track-link"
+         href="https://wishlist.de/w/alexvonderluft"
+         data-target="wishlist"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="meta">
+          <div class="title">Wishlist</div>
+          <div class="desc">send a surprise</div>
+        </div>
+        <div class="thumb">
+          <img src="wishlist.jpeg" alt="Wishlist" />
+        </div>
+      </a>
+    </section>
 
     <a class="back" href="index.html">Back</a>
   </main>
