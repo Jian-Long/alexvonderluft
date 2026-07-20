@@ -1,206 +1,34 @@
-<!-- index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F4A6C1">
+  <meta name="description" content="Alex Vonderluft — personal creator, nightlife and private access.">
   <title>Alex Vonderluft</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
-  <meta name="theme-color" content="#e9e0ef" />
-
-  <style>
-    :root{
-      --white:#ffffff;
-      --soft:rgba(255,255,255,.78);
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    body{
-      font-family:Inter, Helvetica, Arial, sans-serif;
-      color:var(--white);
-      height:100vh;
-      overflow:hidden;
-    }
-
-    .hero{
-      position:relative;
-      height:100vh;
-      width:100%;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      background:
-        linear-gradient(to top, rgba(0,0,0,.68) 0%, rgba(0,0,0,.18) 48%, rgba(0,0,0,.06) 100%),
-        url("hero.jpg") center / cover no-repeat;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,.08);
-      pointer-events:none;
-    }
-
-    .content{
-      position:relative;
-      z-index:2;
-      width:100%;
-      max-width:420px;
-      padding:24px;
-      margin-bottom:22px;
-    }
-
-    .name{
-      font-size:clamp(54px, 14vw, 86px);
-      line-height:.88;
-      letter-spacing:-.07em;
-      font-weight:650;
-    }
-
-    .name span{
-      display:block;
-      font-weight:300;
-    }
-
-    .text{
-      margin-top:16px;
-      font-size:14px;
-      color:var(--soft);
-      letter-spacing:.02em;
-    }
-
-    .btn{
-      position:relative;
-      margin-top:28px;
-      width:100%;
-      height:64px;
-      border-radius:999px;
-      background:rgba(255,255,255,.96);
-      color:#111;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      font-size:15px;
-      letter-spacing:.08em;
-      font-weight:650;
-      box-shadow:0 12px 38px rgba(255,255,255,.18);
-      transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
-      animation:softPulse 4.8s ease-in-out infinite;
-    }
-
-    .btn span{
-      display:inline-block;
-      transition:transform .25s ease;
-    }
-
-    .btn:hover{
-      background:#fff;
-      transform:translateY(-3px);
-      box-shadow:0 20px 52px rgba(255,255,255,.32);
-    }
-
-    .btn:hover span{
-      transform:translateX(5px);
-    }
-
-    .btn:active{
-      transform:scale(.97);
-    }
-
-    @keyframes softPulse{
-      0%, 72%, 100%{
-        transform:scale(1);
-        box-shadow:0 12px 38px rgba(255,255,255,.18);
-      }
-      80%{
-        transform:scale(.985);
-        box-shadow:0 18px 50px rgba(255,255,255,.30);
-      }
-      88%{
-        transform:scale(1);
-      }
-    }
-
-    .note{
-      margin-top:12px;
-      text-align:center;
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.62);
-    }
-
-    @media (min-width:768px){
-      .hero{
-        align-items:center;
-        justify-content:flex-end;
-        padding-right:60px;
-      }
-
-      .content{
-        margin-bottom:0;
-      }
-    }
-  </style>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
-<body>
-  <div class="hero">
-    <div class="content">
-      <div class="name">
-        Alex
-        <span>Vonderluft</span>
-      </div>
-
-      <div class="text">
-        Not everything is meant to be seen.
-      </div>
-
-      <a href="links.html" class="btn" id="enterBtn">
-        <span>Come closer →</span>
-      </a>
-
-      <div class="note">
-        private access
-      </div>
-    </div>
-  </div>
-
+<body class="home">
+  <main class="hero">
+    <section class="hero-content" aria-labelledby="alex-name">
+      <p class="eyebrow" style="color: var(--brand-blue-light)">Personal creator</p>
+      <h1 class="brand-name hero-brand" id="alex-name">Alex <span>Vonderluft</span></h1>
+      <p class="hero-copy">Not everything is meant to be seen.</p>
+      <a href="links.html" class="button hero-cta" id="enterBtn">Come closer <span aria-hidden="true">→</span></a>
+      <p class="hero-note">Private access</p>
+    </section>
+  </main>
+  <script src="site.js"></script>
   <script>
-    const NS = "alexvonderluft_site";
-    const params = new URLSearchParams(window.location.search);
-    const src = params.get("src") || "direct";
-
-    function hit(key) {
-      const url = "https://api.countapi.xyz/hit/" + NS + "/" + encodeURIComponent(key);
-      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
-    }
-
-    hit("page-index");
-    hit("source-" + src);
-    hit("source-" + src + "__page-index");
-
-    const enterBtn = document.getElementById("enterBtn");
-    enterBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      hit("click-enter");
-      hit("source-" + src + "__click-enter");
-
-      const next = new URL("links.html", window.location.href);
-      next.searchParams.set("src", src);
-
-      setTimeout(function () {
-        window.location.href = next.toString();
-      }, 120);
+    alexSite.hit("page-index");
+    alexSite.hit("source-" + alexSite.source);
+    alexSite.hit("source-" + alexSite.source + "__page-index");
+    document.getElementById("enterBtn").href = alexSite.internalUrl("links.html");
+    document.getElementById("enterBtn").addEventListener("click", () => {
+      alexSite.hit("click-enter");
+      alexSite.hit("source-" + alexSite.source + "__click-enter");
     });
   </script>
 </body>

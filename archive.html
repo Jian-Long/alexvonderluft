@@ -1,194 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive, Alex Vonderluft</title>
-
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
-  <meta name="theme-color" content="#e7dfea" />
-  <meta name="robots" content="noindex, nofollow" />
-
-  <style>
-    :root {
-      --bg: #e9e1ec;
-      --text: #111111;
-      --muted: rgba(17, 17, 17, 0.52);
-      --card: rgba(255, 255, 255, 0.62);
-      --line: rgba(17, 17, 17, 0.08);
-      --shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.42);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      padding: 24px 22px 22px;
-    }
-
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 34px;
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-      font-weight: 600;
-    }
-
-    .text {
-      margin-top: 14px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--muted);
-      max-width: 26ch;
-    }
-
-    .actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: transform 0.18s ease, background 0.18s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.985);
-    }
-
-    .btn-primary {
-      background: #111111;
-      color: #ffffff;
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.68);
-      color: #111111;
-      border: 1px solid var(--line);
-    }
-
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 38px;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFD5E3">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Archive — Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <main class="wrap">
-    <section class="card">
-      <div class="eyebrow">Archive</div>
-      <h1>Restricted</h1>
-
-      <p class="text">
-        Some things stay a little further in.
-      </p>
-
-      <div class="actions">
-        <a class="btn btn-primary"
-           id="continueBtn"
-           href="http://alexvonderluft.de"
-           target="_blank"
-           rel="noopener noreferrer">
-          Continue
-        </a>
-
-        <a class="btn btn-secondary" id="backBtn" href="links.html">
-          Back
-        </a>
-      </div>
-    </section>
+<body class="ritual-page">
+  <main class="panel ritual-card">
+    <p class="eyebrow">Private archive</p>
+    <h1 class="brand-name">Restricted.</h1>
+    <p class="lede">Some things stay a little further in.</p>
+    <div class="ritual-actions">
+      <a class="button" id="continueBtn" href="http://alexvonderluft.de" target="_blank" rel="noopener noreferrer">Continue <span aria-hidden="true">→</span></a>
+      <a class="button button--secondary" id="backBtn" href="links.html">Back</a>
+    </div>
+    <p class="countdown" id="countdown" aria-live="polite">Opening automatically…</p>
   </main>
-
+  <script src="site.js"></script>
   <script>
-    const NS = "alexvonderluft_site";
-    const params = new URLSearchParams(window.location.search);
-    const src = params.get("src") || "direct";
     const destination = "http://alexvonderluft.de";
-
-    function hit(key) {
-      const url = "https://api.countapi.xyz/hit/" + NS + "/" + encodeURIComponent(key);
-      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
-    }
-
-    hit("page-archive");
-    hit("source-" + src + "__page-archive");
-
-    const continueBtn = document.getElementById("continueBtn");
-    continueBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-      hit("click-continue");
-      hit("source-" + src + "__click-continue");
-
-      setTimeout(function () {
-        window.open(destination, "_blank", "noopener");
-      }, 120);
+    alexSite.hit("page-archive");
+    alexSite.hit("source-" + alexSite.source + "__page-archive");
+    document.getElementById("backBtn").href = alexSite.internalUrl("links.html");
+    document.getElementById("continueBtn").addEventListener("click", () => {
+      alexSite.hit("click-continue");
+      alexSite.hit("source-" + alexSite.source + "__click-continue");
     });
-
-    const backBtn = document.getElementById("backBtn");
-    backBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-
-      const prev = new URL("links.html", window.location.href);
-      prev.searchParams.set("src", src);
-
-      setTimeout(function () {
-        window.location.href = prev.toString();
-      }, 120);
-    });
-
-    setTimeout(function () {
-      hit("auto-redirect");
-      hit("source-" + src + "__auto-redirect");
+    window.setTimeout(() => {
+      alexSite.hit("auto-redirect");
+      alexSite.hit("source-" + alexSite.source + "__auto-redirect");
       window.location.href = destination;
     }, 1800);
   </script>
