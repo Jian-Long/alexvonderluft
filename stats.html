@@ -10,36 +10,37 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="shell">
-    <header class="stats-top">
+  <main class="shell page-enter">
+    <header class="stats-top reveal">
       <div><p class="eyebrow">Creator overview</p><h1 class="brand-name stats-title">Site stats</h1></div>
       <button class="button" id="refreshBtn" type="button">Refresh</button>
     </header>
     <p class="status" id="status" role="status" aria-live="polite">Loading data…</p>
     <div class="stats-grid">
-      <section class="panel stats-section" aria-labelledby="overview-title">
+      <section class="panel stats-section reveal" aria-labelledby="overview-title">
         <div class="section-head"><h2 class="section-title" id="overview-title">Overview</h2><span class="section-note">Pages</span></div>
         <div class="stat-cards" id="overviewCards"></div>
       </section>
-      <section class="panel stats-section" aria-labelledby="sources-title">
+      <section class="panel stats-section reveal" aria-labelledby="sources-title">
         <div class="section-head"><h2 class="section-title" id="sources-title">Traffic sources</h2><span class="section-note">Origin</span></div>
         <div class="data-table" id="sourcesTable"></div>
       </section>
-      <section class="panel stats-section" aria-labelledby="clicks-title">
+      <section class="panel stats-section reveal" aria-labelledby="clicks-title">
         <div class="section-head"><h2 class="section-title" id="clicks-title">Link clicks</h2><span class="section-note">Destination</span></div>
         <div class="stat-cards" id="clickCards"></div>
       </section>
-      <section class="panel stats-section" aria-labelledby="actions-title">
+      <section class="panel stats-section reveal" aria-labelledby="actions-title">
         <div class="section-head"><h2 class="section-title" id="actions-title">Archive actions</h2><span class="section-note">Private layer</span></div>
         <div class="stat-cards" id="actionCards"></div>
       </section>
-      <section class="panel stats-section" aria-labelledby="flows-title">
+      <section class="panel stats-section reveal" aria-labelledby="flows-title">
         <div class="section-head"><h2 class="section-title" id="flows-title">Source to destination</h2><span class="section-note">Funnel</span></div>
         <div class="data-table" id="flowsTable"></div>
       </section>
     </div>
     <p class="footer">Live analytics from CountAPI. Keep this page private.</p>
   </main>
+  <script src="site.js"></script>
   <script>
     "use strict";
     const API = "https://api.countapi.xyz/get/alexvonderluft_site/";
