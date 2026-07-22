@@ -15,11 +15,12 @@
     <h1 class="brand-name">Stay close.</h1>
     <p class="lede">Choose your way into Alex's world.</p>
     <div class="ritual-actions">
-      <a class="button" href="links.html" id="enterLinks">Enter <span aria-hidden="true">→</span></a>
-      <a class="button button--secondary" href="index.html" id="enterBack">Not yet</a>
+      <a class="button" href="links.html" id="enterLinks" data-track-event="internal_navigation" data-position="main_navigation" data-link-name="enter_links" data-destination-type="internal">Enter <span aria-hidden="true">→</span></a>
+      <a class="button button--secondary" href="index.html" id="enterBack" data-track-event="internal_navigation" data-position="main_navigation" data-link-name="not_yet" data-destination-type="internal">Not yet</a>
     </div>
   </main>
   <script src="site.js"></script>
+  <script src="analytics.js"></script>
   <script>
     document.getElementById("enterLinks").href = alexSite.internalUrl("links.html");
     document.getElementById("enterBack").href = alexSite.internalUrl("index.html");

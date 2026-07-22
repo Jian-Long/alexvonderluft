@@ -17,20 +17,16 @@
       <p class="eyebrow hero-sequence" style="color: var(--brand-blue-light)">Personal creator</p>
       <h1 class="brand-name hero-brand hero-sequence" id="alex-name">Alex <span>Vonderluft</span></h1>
       <p class="hero-copy hero-sequence">Not everything is meant to be seen.</p>
-      <a href="links.html" class="button hero-cta hero-sequence" id="enterBtn">Come closer <span aria-hidden="true">→</span></a>
+      <a href="links.html" class="button hero-cta hero-sequence" id="enterBtn"
+         data-track-event="come_closer_click" data-position="come_closer"
+         data-link-name="come_closer" data-destination-type="internal">Come closer <span aria-hidden="true">→</span></a>
       <p class="hero-note hero-sequence">Private access</p>
     </section>
   </main>
   <script src="site.js"></script>
+  <script src="analytics.js"></script>
   <script>
-    alexSite.hit("page-index");
-    alexSite.hit("source-" + alexSite.source);
-    alexSite.hit("source-" + alexSite.source + "__page-index");
     document.getElementById("enterBtn").href = alexSite.internalUrl("links.html");
-    document.getElementById("enterBtn").addEventListener("click", () => {
-      alexSite.hit("click-enter");
-      alexSite.hit("source-" + alexSite.source + "__click-enter");
-    });
   </script>
 </body>
 </html>

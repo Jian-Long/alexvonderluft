@@ -5,107 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#FFD5E3">
   <meta name="robots" content="noindex, nofollow">
-  <title>Stats — Alex Vonderluft</title>
+  <title>Analytics access — Alex Vonderluft</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="shell page-enter">
-    <header class="stats-top reveal">
-      <div><p class="eyebrow">Creator overview</p><h1 class="brand-name stats-title">Site stats</h1></div>
-      <button class="button" id="refreshBtn" type="button">Refresh</button>
+  <main class="shell narrow page-enter">
+    <header class="links-header reveal">
+      <p class="eyebrow">Private analytics</p>
+      <h1 class="brand-name">Dashboard access</h1>
+      <p class="lede">Analytics data is no longer exposed through this public static site.</p>
     </header>
-    <p class="status" id="status" role="status" aria-live="polite">Loading data…</p>
-    <div class="stats-grid">
-      <section class="panel stats-section reveal" aria-labelledby="overview-title">
-        <div class="section-head"><h2 class="section-title" id="overview-title">Overview</h2><span class="section-note">Pages</span></div>
-        <div class="stat-cards" id="overviewCards"></div>
-      </section>
-      <section class="panel stats-section reveal" aria-labelledby="sources-title">
-        <div class="section-head"><h2 class="section-title" id="sources-title">Traffic sources</h2><span class="section-note">Origin</span></div>
-        <div class="data-table" id="sourcesTable"></div>
-      </section>
-      <section class="panel stats-section reveal" aria-labelledby="clicks-title">
-        <div class="section-head"><h2 class="section-title" id="clicks-title">Link clicks</h2><span class="section-note">Destination</span></div>
-        <div class="stat-cards" id="clickCards"></div>
-      </section>
-      <section class="panel stats-section reveal" aria-labelledby="actions-title">
-        <div class="section-head"><h2 class="section-title" id="actions-title">Archive actions</h2><span class="section-note">Private layer</span></div>
-        <div class="stat-cards" id="actionCards"></div>
-      </section>
-      <section class="panel stats-section reveal" aria-labelledby="flows-title">
-        <div class="section-head"><h2 class="section-title" id="flows-title">Source to destination</h2><span class="section-note">Funnel</span></div>
-        <div class="data-table" id="flowsTable"></div>
-      </section>
-    </div>
-    <p class="footer">Live analytics from CountAPI. Keep this page private.</p>
+    <section class="panel privacy-card reveal">
+      <h2>Protected by the analytics provider</h2>
+      <p>Authorized administrators can sign in to the private Umami Cloud dashboard. This page contains no password, API key, visitor totals or embedded private data.</p>
+      <div class="ritual-actions">
+        <a class="button" href="https://cloud.umami.is/" target="_blank" rel="noopener noreferrer" data-track-event="outbound_click" data-position="stats" data-link-name="umami_dashboard" data-destination-type="admin">Open secure dashboard <span aria-hidden="true">→</span></a>
+        <a class="button button--secondary" href="index.html" id="statsBack" data-track-event="internal_navigation" data-position="stats" data-link-name="stats_back" data-destination-type="internal">Back home</a>
+      </div>
+    </section>
+    <p class="footer">OnlyFans subscription completion cannot be confirmed from website clicks alone.</p>
   </main>
   <script src="site.js"></script>
-  <script>
-    "use strict";
-    const API = "https://api.countapi.xyz/get/alexvonderluft_site/";
-    const statusEl = document.getElementById("status");
-    const refreshBtn = document.getElementById("refreshBtn");
-    const sources = ["ig", "snap", "tg", "story", "dm", "direct"];
-    const overview = [
-      ["page-index", "Homepage", "views"], ["page-links", "Links", "views"],
-      ["page-archive", "Archive", "views"], ["click-enter", "Come closer", "clicks"]
-    ];
-    const clicks = [
-      ["click-instagram", "Instagram", "clicks"], ["click-snapchat", "Snapchat", "clicks"],
-      ["click-telegram", "Telegram", "clicks"], ["click-exclusive", "Exclusive", "clicks"],
-      ["click-wishlist", "Wishlist", "clicks"]
-    ];
-    const actions = [["click-continue", "Continue", "manual clicks"], ["auto-redirect", "Auto redirect", "automatic opens"]];
-    const flowTargets = ["instagram", "snapchat", "telegram", "exclusive"];
-    const flows = ["ig", "snap", "tg"].flatMap(source => flowTargets.map(target => `source-${source}__click-${target}`));
-
-    function formatNumber(value) { return new Intl.NumberFormat(undefined, { notation: value >= 10000 ? "compact" : "standard", maximumFractionDigits: 1 }).format(value); }
-    async function getValue(key) {
-      const response = await fetch(API + encodeURIComponent(key));
-      if (response.status === 404) return null;
-      if (!response.ok) throw new Error("Analytics service unavailable");
-      const data = await response.json();
-      return typeof data.value === "number" ? data.value : null;
-    }
-    function statMarkup(label, value, note) {
-      return `<article class="stat"><div class="stat-label">${label}</div><div class="stat-value">${value === null ? "—" : formatNumber(value)}</div><div class="stat-small">${value === null ? "No data yet" : note}</div></article>`;
-    }
-    async function renderCards(targetId, items) {
-      const values = await Promise.all(items.map(item => getValue(item[0])));
-      document.getElementById(targetId).innerHTML = items.map((item, index) => statMarkup(item[1], values[index], item[2])).join("");
-    }
-    function flowLabel(key) {
-      const parts = key.replace("source-", "").split("__click-");
-      return `${parts[0].toUpperCase()} → ${parts[1][0].toUpperCase() + parts[1].slice(1)}`;
-    }
-    async function renderRows(targetId, keys, labeler) {
-      const values = await Promise.all(keys.map(getValue));
-      const rows = keys.map((key, index) => ({ name: labeler(key), value: values[index] })).filter(row => row.value !== null).sort((a,b) => b.value - a.value);
-      document.getElementById(targetId).innerHTML = rows.length ? rows.map(row => `<div class="data-row"><span class="row-name">${row.name}</span><span class="row-value">${formatNumber(row.value)}</span></div>`).join("") : '<div class="empty">No data yet.</div>';
-    }
-    async function loadStats() {
-      refreshBtn.disabled = true;
-      statusEl.dataset.state = "loading";
-      statusEl.textContent = "Loading live data…";
-      try {
-        await Promise.all([
-          renderCards("overviewCards", overview), renderCards("clickCards", clicks), renderCards("actionCards", actions),
-          renderRows("sourcesTable", sources.map(source => "source-" + source), key => key.replace("source-", "").toUpperCase()),
-          renderRows("flowsTable", flows, flowLabel)
-        ]);
-        statusEl.dataset.state = "ready";
-        statusEl.textContent = "Updated " + new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date());
-      } catch (error) {
-        statusEl.dataset.state = "error";
-        statusEl.textContent = "Live data could not be loaded. Please try again.";
-        ["overviewCards", "clickCards", "actionCards", "sourcesTable", "flowsTable"].forEach(id => {
-          document.getElementById(id).innerHTML = '<div class="empty">Data temporarily unavailable.</div>';
-        });
-      } finally { refreshBtn.disabled = false; }
-    }
-    refreshBtn.addEventListener("click", loadStats);
-    loadStats();
-  </script>
+  <script src="analytics.js"></script>
+  <script>document.getElementById("statsBack").href = alexSite.internalUrl("index.html");</script>
 </body>
 </html>

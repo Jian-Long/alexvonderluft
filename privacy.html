@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFD5E3">
+  <title>Privacy — Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-analytics-banner="off">
+  <main class="shell narrow page-enter privacy-page">
+    <header class="links-header">
+      <p class="eyebrow">Your choice</p>
+      <h1 class="brand-name">Privacy</h1>
+      <p class="lede">A clear summary of analytics used on this website.</p>
+    </header>
+    <section class="panel privacy-card">
+      <h2>Analytics</h2>
+      <p>With your permission, this website sends privacy-focused, aggregate usage events to Umami Cloud. Umami states that it uses no analytics cookies and does not collect personal data for its analytics product. Processing takes place in the Umami Cloud data region selected by the site operator.</p>
+      <p>We measure page visits, campaign attribution, coarse device category, country-level location provided by Umami, scroll milestones, Core Web Vitals and clicks on important links. We do not intentionally send names, email addresses, chat contents, passwords, tokens or arbitrary URL parameters.</p>
+      <p>First-touch, session and last-touch campaign information is stored in your browser only after you allow analytics. You can decline or withdraw at any time using “Privacy choices”. Withdrawing deletes this site's attribution storage and stops future events in this browser.</p>
+      <h2>Purpose and retention</h2>
+      <p>The purpose is to understand aggregate site performance and which campaigns lead to platform visits. The selected data region, retention period and data-processing agreement must be confirmed by the site operator in the Umami Cloud account before production use.</p>
+      <h2>Limits</h2>
+      <p>An Exclusive click shows only that a visitor followed a website link. It does not prove an OnlyFans subscription or payment. In-app browser detection and returning-visitor status are estimates.</p>
+      <h2>Your controls</h2>
+      <div class="privacy-actions">
+        <button class="button" type="button" onclick="alexAnalytics.setConsent('granted')">Allow analytics</button>
+        <button class="button button--secondary" type="button" onclick="alexAnalytics.setConsent('denied')">Decline analytics</button>
+      </div>
+      <p>This technical notice is not a substitute for the operator's complete Datenschutzerklärung, Impressum, controller contact details or legal review.</p>
+    </section>
+    <a class="text-link page-back" href="index.html" id="privacyBack" data-track-event="internal_navigation" data-position="privacy" data-link-name="privacy_back" data-destination-type="internal">Back home</a>
+  </main>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+  <script>document.getElementById("privacyBack").href = alexSite.internalUrl("index.html");</script>
+</body>
+</html>

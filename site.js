@@ -1,6 +1,5 @@
 (function () {
   "use strict";
-  const namespace = "alexvonderluft_site";
   const params = new URLSearchParams(window.location.search);
   const source = params.get("src") || "direct";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -36,13 +35,12 @@
   window.alexSite = {
     source,
     reducedMotion,
-    hit(key) {
-      const url = "https://api.countapi.xyz/hit/" + namespace + "/" + encodeURIComponent(key);
-      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
-    },
     internalUrl(path) {
       const next = new URL(path, window.location.href);
-      next.searchParams.set("src", source);
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "src"].forEach(key => {
+        const value = params.get(key);
+        if (value) next.searchParams.set(key, value);
+      });
       return next.toString();
     }
   };

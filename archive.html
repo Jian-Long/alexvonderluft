@@ -10,30 +10,25 @@
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="ritual-page">
+<body class="ritual-page" data-analytics-banner="off">
   <main class="panel ritual-card page-enter">
     <p class="eyebrow">Private archive</p>
     <h1 class="brand-name">Restricted.</h1>
     <p class="lede">Some things stay a little further in.</p>
     <div class="ritual-actions">
-      <a class="button" id="continueBtn" href="http://alexvonderluft.de" target="_blank" rel="noopener noreferrer">Continue <span aria-hidden="true">→</span></a>
-      <a class="button button--secondary" id="backBtn" href="links.html">Back</a>
+      <a class="button" id="continueBtn" href="http://alexvonderluft.de" target="_blank" rel="noopener noreferrer"
+         data-track-event="archive_open" data-platform="onlyfans" data-position="archive" data-link-name="archive_continue" data-destination-type="exclusive">Continue <span aria-hidden="true">→</span></a>
+      <a class="button button--secondary" id="backBtn" href="links.html" data-track-event="internal_navigation" data-position="archive" data-link-name="archive_back" data-destination-type="internal">Back</a>
     </div>
     <p class="countdown" id="countdown" aria-live="polite">Opening automatically…</p>
   </main>
   <script src="site.js"></script>
+  <script src="analytics.js"></script>
   <script>
     const destination = "http://alexvonderluft.de";
-    alexSite.hit("page-archive");
-    alexSite.hit("source-" + alexSite.source + "__page-archive");
     document.getElementById("backBtn").href = alexSite.internalUrl("links.html");
-    document.getElementById("continueBtn").addEventListener("click", () => {
-      alexSite.hit("click-continue");
-      alexSite.hit("source-" + alexSite.source + "__click-continue");
-    });
     window.setTimeout(() => {
-      alexSite.hit("auto-redirect");
-      alexSite.hit("source-" + alexSite.source + "__auto-redirect");
+      alexAnalytics.trackEvent("archive_open", { trigger: "automatic", platform: "onlyfans", link_position: "archive", destination_type: "exclusive", destination_domain: "alexvonderluft.de" });
       window.location.href = destination;
     }, 1800);
   </script>

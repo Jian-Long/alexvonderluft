@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFD5E3">
+  <meta name="robots" content="noindex">
+  <title>Not found — Alex Vonderluft</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="ritual-page">
+  <main class="panel ritual-card page-enter">
+    <p class="eyebrow">404</p>
+    <h1 class="brand-name">Lost in the night.</h1>
+    <p class="lede">This page does not exist or has moved.</p>
+    <div class="ritual-actions"><a class="button" href="index.html" id="home404" data-track-event="internal_navigation" data-position="main_navigation" data-link-name="404_home" data-destination-type="internal">Back home</a></div>
+  </main>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+  <script>
+    document.getElementById("home404").href = alexSite.internalUrl("index.html");
+    document.addEventListener("DOMContentLoaded", () => alexAnalytics.trackEvent("error_404", { requested_path: alexAnalytics.canonicalPath(location.pathname) }), { once: true });
+  </script>
+</body>
+</html>
