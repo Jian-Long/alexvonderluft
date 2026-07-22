@@ -88,10 +88,10 @@ Common properties: `page_path`, `page_title`, `source`, `medium`, `campaign`, `c
 
 Configure these in Umami Insights after the matching events have been received.
 
-1. **Exclusive conversion** (sequential): `/` → `come_closer_click` → `/links.html` → `exclusive_click` → `archive_open`.
+1. **Exclusive conversion** (sequential): `/` → `come_closer_click` → `/links.html` → `exclusive_click`.
 2. **Telegram conversion**: site entry → `/links.html` → `social_click` filtered by `platform=telegram`.
 3. **Social follow conversion**: site entry → `social_click` filtered by platform (`instagram`, `snapchat`, or `twitter`).
-4. **Content exploration**: `/` → `/archive.html` → `archive_open` → external click where available.
+4. **Content exploration**: `/` → `/links.html` → an outbound, social or exclusive click.
 
 OnlyFans subscription completion cannot be verified from this website. Use an official OnlyFans tracking link/report if available; never label `exclusive_click` as a paid subscription.
 
