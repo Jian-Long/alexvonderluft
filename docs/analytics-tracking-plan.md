@@ -8,7 +8,7 @@
 - Website ID: `13e0d910-b220-4778-8b9b-09d75f1f795f` (public tracker identifier, not an admin secret)
 - Dashboard: private Umami Cloud account; never embed an API token in this repository
 - Tracker: `https://cloud.umami.is/script.js`, loaded automatically without cookies or fingerprinting
-- Notice mode: no consent banner; transparent privacy notice, Do Not Track support and browser-level opt-out
+- Notice mode: no consent banner or visible privacy control; the notice remains available only at `/privacy.html`
 - Development traffic: disabled on `localhost`, `127.0.0.1`, `.local` and `file:`
 - Administrator exclusion: set `localStorage.alex_analytics_ignore = "true"`
 
@@ -130,7 +130,7 @@ Recommended custom-event Goals: `come_closer_click`, `social_click`, `exclusive_
 
 1. Test production after confirming the exact hostname in Umami Cloud; localhost is intentionally excluded.
 2. Verify the notice banner is absent and Umami loads automatically without creating analytics cookies.
-3. Disable analytics on the privacy page and verify navigation, external links and animations still work while no events are sent.
+3. Verify there is no visible privacy control or link to `/privacy.html` on public pages.
 4. Accept and test each URL:
    - `/?utm_source=instagram&utm_medium=bio&utm_campaign=test`
    - `/?utm_source=snapchat&utm_medium=story&utm_campaign=test`

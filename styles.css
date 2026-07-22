@@ -180,13 +180,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .privacy-card h2 { margin: 24px 0 8px; font-family: var(--font-display); font-size: 1.45rem; font-weight: 500; }
 .privacy-card h2:first-child { margin-top: 0; }
 .privacy-card p { margin: 0 0 14px; color: var(--brand-muted); font-size: .88rem; line-height: 1.65; }
-.privacy-actions { display: grid; gap: 10px; margin: 22px 0; }
-.privacy-actions .button--secondary { border-color: var(--brand-blue); background: var(--brand-blue-light); color: var(--brand-text); }
-.privacy-control {
-  position: fixed; z-index: 900; right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom));
-  min-height: 36px; padding: 0 11px; border: 1px solid var(--line); border-radius: 10px;
-  color: var(--brand-muted); background: rgba(255,255,255,.92); font: 600 .68rem/1 var(--font-body); cursor: pointer;
-}
 
 @media (min-width: 768px) {
   .hero { align-items: center; background-position: center; }
@@ -195,7 +188,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .narrow { padding-top: 42px; }
   .stat-cards { grid-template-columns: repeat(4, minmax(0,1fr)); }
   .link-card:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(88,61,77,.12); }
-  .privacy-actions { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) {
   .stats-top { align-items: stretch; flex-direction: column; }

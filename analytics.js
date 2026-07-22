@@ -7,7 +7,6 @@
   const SAFE_CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "src"];
   const SOURCE_ALIASES = { ig: "instagram", instagram: "instagram", snap: "snapchat", snapchat: "snapchat", tg: "telegram", telegram: "telegram", x: "twitter", twitter: "twitter", of: "onlyfans", onlyfans: "onlyfans" };
   const isDevelopment = location.protocol === "file:" || location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.endsWith(".local");
-  const dntEnabled = navigator.doNotTrack === "1" || window.doNotTrack === "1";
   let enabled = false;
   let listenersAttached = false;
   let errorCount = 0;
@@ -135,7 +134,6 @@
       script.dataset.websiteId = WEBSITE_ID;
       script.dataset.autoTrack = "false";
       script.dataset.domains = DOMAIN + ",www." + DOMAIN;
-      script.dataset.doNotTrack = "true";
       script.dataset.excludeHash = "true";
       script.dataset.performance = "true";
       script.addEventListener("load", () => resolve(window.umami || null), { once: true });
@@ -146,7 +144,7 @@
   }
 
   function send(name, props) {
-    if (!enabled || isDevelopment || dntEnabled || analyticsIgnored()) return false;
+    if (!enabled || isDevelopment || analyticsIgnored()) return false;
     const event = { name: clean(name, "outbound_click"), props: Object.assign(commonProps(), props || {}) };
     if (window.umami) {
       try { window.umami.track(event.name, event.props); return true; } catch (_) { return false; }
@@ -157,7 +155,7 @@
   }
 
   function sendPageView() {
-    if (!enabled || isDevelopment || dntEnabled || analyticsIgnored()) return Promise.resolve();
+    if (!enabled || isDevelopment || analyticsIgnored()) return Promise.resolve();
     return loadTracker().then(tracker => {
       if (!tracker) return;
       try {
@@ -216,7 +214,7 @@
   }
 
   function startAnalytics() {
-    if (enabled || isDevelopment || dntEnabled) return;
+    if (enabled || isDevelopment) return;
     enabled = true;
     sendPageView();
     if (!listenersAttached) {
@@ -226,35 +224,17 @@
     }
   }
 
-  function setConsent(choice) {
-    const ignored = choice === "denied";
-    safeStorage(localStorage, ignored ? "set" : "remove", "alex_analytics_ignore", "true");
-    if (ignored) enabled = false;
-    else startAnalytics();
-  }
-
-  function addPrivacyControl() {
-    if (document.body.dataset.analyticsBanner === "off" || document.querySelector(".privacy-control")) return;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "privacy-control";
-    button.textContent = "Analytics privacy";
-    button.addEventListener("click", () => { location.href = "privacy.html"; });
-    document.body.appendChild(button);
-  }
-
   window.addEventListener("error", event => {
     if (errorCount >= 3) return;
     errorCount += 1;
     send("javascript_error", { error_type: event.error ? "runtime" : "resource" }, false);
   }, true);
 
-  window.alexAnalytics = { trackEvent: send, getTrafficSource: currentTouch, getCampaignData: currentTouch, setConsent, canonicalPath };
+  window.alexAnalytics = { trackEvent: send, getTrafficSource: currentTouch, getCampaignData: currentTouch, canonicalPath };
 
   function init() {
     clearLegacyAnalyticsStorage();
-    addPrivacyControl();
-    if (isDevelopment || dntEnabled) return;
+    if (isDevelopment) return;
     startAnalytics();
   }
 
