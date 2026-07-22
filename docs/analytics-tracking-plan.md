@@ -7,8 +7,8 @@
 - Analytics processor: Umami Cloud, site domain `alexvonderluft.com`
 - Website ID: `13e0d910-b220-4778-8b9b-09d75f1f795f` (public tracker identifier, not an admin secret)
 - Dashboard: private Umami Cloud account; never embed an API token in this repository
-- Tracker: `https://cloud.umami.is/script.js`, loaded only after consent
-- Consent mode: explicit opt-in before analytics or attribution storage
+- Tracker: `https://cloud.umami.is/script.js`, loaded automatically without cookies or fingerprinting
+- Notice mode: no consent banner; transparent privacy notice, Do Not Track support and browser-level opt-out
 - Development traffic: disabled on `localhost`, `127.0.0.1`, `.local` and `file:`
 - Administrator exclusion: set `localStorage.alex_analytics_ignore = "true"`
 
@@ -38,7 +38,7 @@ The Umami Cloud account and site exist. The selected data region, DPA, controlle
 | `direct` | no campaign and no referrer | `none` |
 | `unknown` | invalid or unclassifiable input | `unknown` |
 
-Priority: valid UTM source → valid `src` alias → referrer → direct. First-touch, current-session and last-touch attribution are stored only after consent.
+Priority: valid UTM source → valid `src` alias → referrer → direct. Attribution is calculated for the current page only and is not stored in the visitor's browser.
 
 ## Campaign naming
 
@@ -66,7 +66,6 @@ Event names are lowercase snake_case. One physical click produces one primary se
 | Event | When | Key parameters |
 | --- | --- | --- |
 | `page_view` | Each normal document load; sent with `umami.track()` pageview payload | canonical page path, landing page, attribution, device class |
-| `session_start` | First consented page in a browser session | landing page, attribution, new/returning estimate |
 | `come_closer_click` | Homepage CTA | link name, position, destination type |
 | `social_click` | Instagram, Snapchat, Telegram or X click | platform, link name, position, destination hostname |
 | `exclusive_click` | Exclusive/OnlyFans entry click | platform, link name, position, destination type |
@@ -78,9 +77,8 @@ Event names are lowercase snake_case. One physical click produces one primary se
 | Umami performance | Umami tracker Core Web Vitals collection | standard performance metrics managed by Umami |
 | `javascript_error` | At most three errors per session | error category only |
 | `error_404` | Custom 404 page | canonical requested path |
-| `consent_updated` | Optional QA only; not enabled as a dashboard goal | choice |
 
-Common properties: `page_path`, `page_title`, `source`, `medium`, `campaign`, `content`, `first_source`, `last_source`, `device_type`, `link_name`, `link_position`, `platform`, `destination_type`, `destination_domain`.
+Common properties: `page_path`, `page_title`, `source`, `medium`, `campaign`, `content`, `device_type`, `link_name`, `link_position`, `platform`, `destination_type`, `destination_domain`.
 
 ## Link positions
 
@@ -101,7 +99,7 @@ OnlyFans subscription completion cannot be verified from this website. Use an of
 
 Use the private Umami Cloud dashboard and create:
 
-1. Overview: visitors, sessions, views, returning visitor estimate, engagement, outbound/exclusive clicks and Exclusive CTR.
+1. Overview: visitors, sessions, views, engagement, outbound/exclusive clicks and Exclusive CTR.
 2. Sources: source/medium/campaign filters with Come Closer, Exclusive, Telegram and social goals.
 3. Destinations: custom event Goals grouped by platform and destination type.
 4. Source-to-destination: filter/export custom event properties by `source` and `platform`; a literal matrix requires a protected Stats API consumer, not GitHub Pages.
@@ -118,7 +116,6 @@ Recommended custom-event Goals: `come_closer_click`, `social_click`, `exclusive_
 
 - Exclusive CTR = unique `exclusive_click` conversions / relevant unique sessions.
 - No outbound action = relevant sessions minus sessions with any outbound/social/exclusive/email event.
-- Returning visitor is a consented first-party-browser estimate; do not treat it as a verified identity.
 - Average engagement and bounce/exit definitions should use Umami's dashboard definitions rather than mixing CountAPI totals.
 
 ## Retention and access
@@ -132,8 +129,8 @@ Recommended custom-event Goals: `come_closer_click`, `social_click`, `exclusive_
 ## Test plan
 
 1. Test production after confirming the exact hostname in Umami Cloud; localhost is intentionally excluded.
-2. Clear consent and verify neither `cloud.umami.is/script.js` nor `/api/send` loads before acceptance.
-3. Reject and verify navigation, external links and animations still work.
+2. Verify the notice banner is absent and Umami loads automatically without creating analytics cookies.
+3. Disable analytics on the privacy page and verify navigation, external links and animations still work while no events are sent.
 4. Accept and test each URL:
    - `/?utm_source=instagram&utm_medium=bio&utm_campaign=test`
    - `/?utm_source=snapchat&utm_medium=story&utm_campaign=test`

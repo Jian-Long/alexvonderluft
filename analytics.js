@@ -4,17 +4,12 @@
   const DOMAIN = "alexvonderluft.com";
   const WEBSITE_ID = "13e0d910-b220-4778-8b9b-09d75f1f795f";
   const TRACKER_URL = "https://cloud.umami.is/script.js";
-  const CONSENT_KEY = "alex_analytics_consent";
-  const FIRST_KEY = "alex_analytics_first_touch";
-  const LAST_KEY = "alex_analytics_last_touch";
-  const VISITOR_KEY = "alex_analytics_visited";
-  const SESSION_KEY = "alex_analytics_session";
   const SAFE_CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "src"];
   const SOURCE_ALIASES = { ig: "instagram", instagram: "instagram", snap: "snapchat", snapchat: "snapchat", tg: "telegram", telegram: "telegram", x: "twitter", twitter: "twitter", of: "onlyfans", onlyfans: "onlyfans" };
   const isDevelopment = location.protocol === "file:" || location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.endsWith(".local");
   const dntEnabled = navigator.doNotTrack === "1" || window.doNotTrack === "1";
   let enabled = false;
-  let attribution = null;
+  let listenersAttached = false;
   let errorCount = 0;
   let trackerPromise = null;
   const pendingEvents = [];
@@ -93,34 +88,13 @@
     };
   }
 
-  function parseStored(storage, key) {
-    try { return JSON.parse(safeStorage(storage, "get", key) || "null"); } catch (_) { return null; }
-  }
-
-  function buildAttribution() {
-    const touch = currentTouch();
-    const existingFirst = parseStored(localStorage, FIRST_KEY);
-    const existingSession = parseStored(sessionStorage, SESSION_KEY);
-    const isCampaignTouch = touch.source !== "direct" && touch.source !== "unknown";
-    const first = existingFirst || touch;
-    const session = existingSession || touch;
-    const previousLast = parseStored(localStorage, LAST_KEY);
-    const last = isCampaignTouch ? touch : (previousLast || touch);
-    const returning = safeStorage(localStorage, "get", VISITOR_KEY) === "true";
-    safeStorage(localStorage, "set", FIRST_KEY, JSON.stringify(first));
-    safeStorage(localStorage, "set", LAST_KEY, JSON.stringify(last));
-    safeStorage(localStorage, "set", VISITOR_KEY, "true");
-    safeStorage(sessionStorage, "set", SESSION_KEY, JSON.stringify(session));
-    return { current: session, first, last, returning, newSession: !existingSession };
-  }
-
   function deviceType() {
     const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     return width < 768 ? "mobile" : width < 1024 ? "tablet" : "desktop";
   }
 
   function commonProps() {
-    const current = attribution ? attribution.current : currentTouch();
+    const current = currentTouch();
     return {
       page_path: canonicalPath(location.pathname),
       page_title: clean(document.title, "untitled"),
@@ -128,9 +102,6 @@
       medium: current.medium,
       campaign: current.campaign,
       content: current.content,
-      first_source: attribution ? attribution.first.source : current.source,
-      last_source: attribution ? attribution.last.source : current.source,
-      visitor_type: attribution && attribution.returning ? "returning" : "new",
       device_type: deviceType(),
       language: clean((navigator.language || "unknown").split("-")[0], "unknown")
     };
@@ -138,6 +109,12 @@
 
   function analyticsIgnored() {
     return safeStorage(localStorage, "get", "alex_analytics_ignore") === "true";
+  }
+
+  function clearLegacyAnalyticsStorage() {
+    ["alex_analytics_consent", "alex_analytics_first_touch", "alex_analytics_last_touch", "alex_analytics_visited"]
+      .forEach(key => safeStorage(localStorage, "remove", key));
+    safeStorage(sessionStorage, "remove", "alex_analytics_session");
   }
 
   function flushEvents() {
@@ -241,36 +218,19 @@
   function startAnalytics() {
     if (enabled || isDevelopment || dntEnabled) return;
     enabled = true;
-    attribution = buildAttribution();
     sendPageView();
-    if (attribution.newSession) send("session_start", { landing_page: canonicalPath(location.pathname) }, false);
-    document.addEventListener("click", handleTrackedClick, { capture: true });
-    trackScrollDepth();
-  }
-
-  function clearAnalyticsStorage() {
-    [FIRST_KEY, LAST_KEY, VISITOR_KEY].forEach(key => safeStorage(localStorage, "remove", key));
-    safeStorage(sessionStorage, "remove", SESSION_KEY);
+    if (!listenersAttached) {
+      listenersAttached = true;
+      document.addEventListener("click", handleTrackedClick, { capture: true });
+      trackScrollDepth();
+    }
   }
 
   function setConsent(choice) {
-    safeStorage(localStorage, "set", CONSENT_KEY, choice);
-    document.querySelector(".consent-banner")?.remove();
-    if (choice === "granted") startAnalytics();
-    else { enabled = false; clearAnalyticsStorage(); }
-  }
-
-  function showConsent() {
-    if (document.body.dataset.analyticsBanner === "off" || document.querySelector(".consent-banner")) return;
-    const banner = document.createElement("aside");
-    banner.className = "consent-banner";
-    banner.setAttribute("aria-labelledby", "consent-title");
-    banner.innerHTML = '<div><strong id="consent-title">Private analytics choice</strong><p>With your permission, anonymous analytics help Alex understand visits and link clicks. No advertising profiles or sensitive details.</p><a href="privacy.html">Privacy details</a></div><div class="consent-actions"><button class="button button--secondary" type="button" data-consent="denied">Decline</button><button class="button" type="button" data-consent="granted">Allow analytics</button></div>';
-    banner.addEventListener("click", event => {
-      const choice = event.target.closest("[data-consent]")?.dataset.consent;
-      if (choice) setConsent(choice);
-    });
-    document.body.appendChild(banner);
+    const ignored = choice === "denied";
+    safeStorage(localStorage, ignored ? "set" : "remove", "alex_analytics_ignore", "true");
+    if (ignored) enabled = false;
+    else startAnalytics();
   }
 
   function addPrivacyControl() {
@@ -278,13 +238,8 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "privacy-control";
-    button.textContent = "Privacy choices";
-    button.addEventListener("click", () => {
-      safeStorage(localStorage, "remove", CONSENT_KEY);
-      clearAnalyticsStorage();
-      enabled = false;
-      showConsent();
-    });
+    button.textContent = "Analytics privacy";
+    button.addEventListener("click", () => { location.href = "privacy.html"; });
     document.body.appendChild(button);
   }
 
@@ -297,11 +252,10 @@
   window.alexAnalytics = { trackEvent: send, getTrafficSource: currentTouch, getCampaignData: currentTouch, setConsent, canonicalPath };
 
   function init() {
+    clearLegacyAnalyticsStorage();
     addPrivacyControl();
     if (isDevelopment || dntEnabled) return;
-    const consent = safeStorage(localStorage, "get", CONSENT_KEY);
-    if (consent === "granted") startAnalytics();
-    else if (consent !== "denied") showConsent();
+    startAnalytics();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
